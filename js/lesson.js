@@ -15,3 +15,4 @@ phoneButton.addEventListener('click', ()=>{
         phoneResult.style.color = 'red'
     }
 })
+

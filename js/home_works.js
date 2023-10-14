@@ -20,26 +20,66 @@ mailButton.addEventListener('click', ()=>{
 
 // HW1-2
 const childBlock = document.querySelector('.child_block')
-let count = 0
-function animateBall() {
-    count ++
-    if (count < 450) {
-        childBlock.style.left = count + 'px'
-        setTimeout(animateBall, 5)
-    }else {
-        setTimeout(backAnimated, 1000)
+let posX = 0
+let posY = 0
+let sideChanger = 'right'
+function animateBall(){
+    if(sideChanger === 'right' && posX < 449){
+        posX++
+        childBlock.style.left = `${posX}px`
+    }else if(sideChanger === 'right' && posX >= 449){
+        sideChanger = 'down'
+    }else if(sideChanger === 'down' && posY < 449){
+        posY++
+        childBlock.style.top = `${posY}px`
+    }else if (sideChanger === 'down' && posY >= 449) {
+        sideChanger = 'left'
+    }else if(sideChanger === 'left' && posX > 0){
+        posX--
+        childBlock.style.left = `${posX}px`
+    }else if(sideChanger === 'left' && posX >= 0){
+        sideChanger = 'up'
+    }else if(sideChanger === 'up' && posY > 0){
+        posY--
+        childBlock.style.top = `${posY}px`
+    }else if(sideChanger === 'up' && posY <= 0) {
+        sideChanger= 'right';
     }
-}
+    setTimeout(animateBall, 10);
 
-function backAnimated(){
-    count--
-    if(count > 0){
-        childBlock.style.left = count + 'px'
-        setTimeout(backAnimated, 5)
-    }else {
-        count = 0
-        setTimeout(animateBall, 1000)
-    }
 }
 animateBall()
 
+
+//HW 2
+
+const time = document.querySelector('#secondsS')
+const btnStart= document.querySelector('#start')
+const btnStop= document.querySelector('#stop')
+const btnReset= document.querySelector('#reset')
+let num = 0
+let start;
+let flag = false
+btnStart.onclick = () =>{
+    if(!flag){
+        start = setInterval( ()=>{
+            num++
+            time.textContent = num
+        } , 1000)
+    }
+    flag = true
+}
+
+btnStop.onclick = () => {
+    if(flag){
+        clearInterval(start)
+    }
+    flag = false
+}
+
+btnReset.onclick = () => {
+    clearInterval(start)
+    num = 0
+    time.textContent = num
+    flag = false
+}

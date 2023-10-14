@@ -69,7 +69,7 @@
     height: 50px;
     border: 5px dashed red;
     border-radius: 50%;
-    transition: all 0.9s ease;
+    transition: all 0.01s ease;
     animation: rotate 3s linear infinite;
 }
 
@@ -132,6 +132,10 @@
     inset: 0;
     margin: auto;
     transition: 1s linear;
+}
+
+.interval{
+    margin: 0 auto;
 }
 
 .minutes {
