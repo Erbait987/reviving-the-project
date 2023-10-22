@@ -46,3 +46,10 @@ function scrollHandler() {
 }
 
 window.addEventListener("scroll", scrollHandler);
+
+// const scrollHandler = () => {
+//   if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+//     openModal();
+//   }
+// };
+// window.addEventListener("scroll", scrollHandler);
