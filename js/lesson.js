@@ -69,6 +69,7 @@ tabsParent.onclick = (event) => {
 
 autoSlide(flag);
 
+// HW 5
 const somInput = document.querySelector("#som");
 const usdInput = document.querySelector("#usd");
 const euroInput = document.querySelector("#eur");
@@ -110,3 +111,56 @@ const converter = (elementValue, targetValue, secondTargetValue, variant) => {
 converter(somInput, usdInput, euroInput, "som");
 converter(usdInput, somInput, euroInput, "dollar");
 converter(euroInput, somInput, usdInput, "euro");
+
+//HW 6
+const card = document.querySelector(".card");
+const btnPrev = document.querySelector("#btn-prev");
+const btnNext = document.querySelector("#btn-next");
+
+let id = 1;
+
+const fetchObject = (data) => {
+  fetch(`https://jsonplaceholder.typicode.com/todos/${id}`)
+    .then((response) => response.json())
+    .then((data) => {
+      card.innerHTML = `
+    <p>${data.title}</p>
+    <p style="color: ${data.completed ? "green" : "red"}" >${data.completed}</p>
+    <span>${data.id}</span>
+  `;
+    });
+};
+
+fetchObject(id);
+
+btnNext.onclick = () => {
+  id++;
+  if (id <= 200) {
+    fetchObject(id);
+  } else {
+    id = 1;
+    fetchObject(id);
+  }
+};
+
+btnPrev.onclick = () => {
+  id--;
+  if (id >= 1) {
+    fetchObject(id);
+  } else {
+    id = 200;
+    fetchObject(id);
+  }
+};
+
+//2 task
+function showApi() {
+  fetch("https://jsonplaceholder.typicode.com/posts")
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((item) => {
+        console.log(item);
+      });
+    });
+}
+showApi();
