@@ -119,48 +119,84 @@ const btnNext = document.querySelector("#btn-next");
 
 let id = 1;
 
-const fetchObject = (data) => {
-  fetch(`https://jsonplaceholder.typicode.com/todos/${id}`)
-    .then((response) => response.json())
-    .then((data) => {
-      card.innerHTML = `
-    <p>${data.title}</p>
-    <p style="color: ${data.completed ? "green" : "red"}" >${data.completed}</p>
-    <span>${data.id}</span>
-  `;
-    });
+const fetchObject = async () => {
+  try {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/todos/${id}`
+    );
+    const data = await response.json();
+    card.innerHTML = `
+      <p>${data.title}</p>
+      <p style="color: ${data.completed ? "green" : "red"}" >${
+      data.completed
+    }</p>
+      <span>${data.id}</span>
+    `;
+  } catch (e) {
+    console.log(e.message);
+  }
 };
 
-fetchObject(id);
+fetchObject();
 
 btnNext.onclick = () => {
   id++;
   if (id <= 200) {
-    fetchObject(id);
+    fetchObject();
   } else {
     id = 1;
-    fetchObject(id);
+    fetchObject();
   }
 };
 
 btnPrev.onclick = () => {
   id--;
   if (id >= 1) {
-    fetchObject(id);
+    fetchObject();
   } else {
     id = 200;
-    fetchObject(id);
+    fetchObject();
   }
 };
 
 //2 task
-function showApi() {
-  fetch("https://jsonplaceholder.typicode.com/posts")
-    .then((response) => response.json())
-    .then((data) => {
-      data.forEach((item) => {
-        console.log(item);
-      });
+const showApi = async () => {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+    const data = await response.json();
+    data.forEach((item) => {
+      console.log(item);
     });
-}
+  } catch (e) {
+    console.log(e.message);
+  }
+};
 showApi();
+
+// Weather
+
+const cityNameInput = document.querySelector(".cityName");
+const city = document.querySelector(".city");
+const temp = document.querySelector(".temp");
+// const btnSearch = document.querySelector("#search-btn");
+const API_KEY = "e417df62e04d3b1b111abeab19cea714";
+const BASE_URL = "http://api.openweathermap.org/data/2.5/weather";
+
+const citySearch = () => {
+  cityNameInput.oninput = async () => {
+    try {
+      const response = await fetch(
+        `${BASE_URL}?q=${event.target.value}&appid=${API_KEY}`
+      );
+      const data = await response.json();
+      city.innerHTML = data.name;
+      city.innerHTML = data?.name ? data?.name : "Город не найден...";
+      temp.innerHTML = data?.main?.temp
+        ? Math.round(data.main.temp - 273) + "&deg;" + "C"
+        : "...";
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+};
+citySearch();
